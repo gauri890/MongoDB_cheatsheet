@@ -1,0 +1,114 @@
+**MONGODB commands for Databases**
+
+view all databases
+->show dbs 
+
+create a new or switch databases
+-> use dbName
+
+view current DB 
+->db 
+
+Delete DB 
+->db.dropDatabase() 
+
+**MONGODB commands for collections**
+
+show collections
+->show collections
+
+Create a collections named 'Comments'
+->db.createCollection('comments') 
+
+Drop a collection name 'comments'
+->db.comments.drop
+
+**MONGODB commands for rows**
+
+show all rows
+->db.comments.find()
+
+show all rows (prettified)
+->db.comments.find().pretty()
+ 
+Insert  1 rows
+->db.comments.insert({
+    'name' : 'Gauri',
+    'surname' : 'sharma',
+    'member_since' : 5
+})
+
+Insert  many rows
+->db.comments.insertMany([{
+    'name' : 'Gauri',
+    'surname' : 'sharma',
+    'member_since' : 5
+},
+{
+    'name' : 'gunjan',
+    'surname' : 'verma',
+    'member_since' : 6
+},
+{
+    'name' : 'Himanshu',
+    'surname' : 'jha',
+    'member_since' : 38
+}])
+
+Search in Mongodb database
+->db.comments.find({surname : 'verma'})
+
+limit the number of rows in output
+-> db.comments.find().pretty().limit(2)
+
+count the number of rows in the output
+->db.comments.find().count()
+->db.comments.find({name : 'Himanshu'}).count()
+
+sort the collections using 'member_since' field
+->db.comments.find().sort({member_since = 1}).pretty() 
+1 for asec and -1 for desc
+
+Find the first row matching the object
+->db.comments.findone({name : 'gauri'})
+
+Update a row
+->db.comments.update({name : 'Himanshu'}
+{
+    'name' :'himanshu',
+    'member_since' : 22
+})
+
+->db.comments.update({name : 'Ismail'},
+{
+    'name' : 'Ismail',
+    'surname' : 'khan',
+    'member_since' : 12
+
+}, {upsert : true})
+
+Mongodb increment operator
+->db.comments.update({name : 'Gunjan'},
+{$inc :{
+    'member_since' : 2
+}})
+
+
+Mongodb rename operator for 1 document
+->db.comments.update({name : 'Gunjan'},
+{$rename :{
+    'member_since' : 'member'
+}})
+
+Mongodb rename operator for all document
+->db.comments.update(
+{$rename :{
+    'member_since' : 'member'
+}} )
+
+delete row
+-> db.comments.remove({name : 'gauri'})
+
+less than/ greater than (gt)/ less than equal to (lte)/ greater than  equal to(gte)
+->db.comments.find({member : {$lt : 90}})
+
